@@ -20,8 +20,8 @@ so, I already had something to put inside the blobs/xx80/x280_download_clean_deg
 But the only problem I got was the x280_ifd.bin file, that appearently is incorrect 
 (which surprised by tbh because it didn't caused any problems with libreboot, but now I have to change it in the libreboot port.)
 
-well, the problem is in the [x280_initial_ifd_file_error.txt]()
-I tried fixing it by changing the [next layout file]() and using the "fix_cbfs_ifd" 
+well, the problem is in the [x280_initial_ifd_file_error.txt](mess/x280_initial_ifd_file_error.txt)
+I tried fixing it by changing the [next layout file](mess/layout.txt) and using the "fix_cbfs_ifd" 
 parameter, but neither of them worked, since I didn't want to realocate space for the
 ifd file I have because that could break the linuxboot payload, I tried getting some 
 AI assistance to shrink the x280_ifd.bin file, and yeah, it helped me to get a final 
@@ -54,7 +54,7 @@ mv ifd_16.new blobs/xx80/x280_ifd.bin
 
 Honestly I don't totally get what the python part does but it compile and does't boot.
 
-I will put everything that didn't get into the heads file structure in the [mess]() folderfor the future.
+I will put everything that didn't get into the heads file structure in the [mess](mess) folderfor the future.
 
 I won't be working in testing for a while. My SOIC 8 clip died while doing the testing and I just barely made it to flash a libreboot rom into it. I'll ask a teacher if he has one, in the case the answer is yes nothing will change a lot, but I can't promise a lot.
 
