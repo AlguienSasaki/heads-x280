@@ -1,0 +1,477 @@
+----------------------------------------------------------------------
+!!!!!! BUILD SYSTEM INFO !!!!!!
+System CPUS: 8
+System Available Memory: 10164 GB
+System Load Average: 0.94
+----------------------------------------------------------------------
+Used **CPUS**: 8
+Used **LOADAVG**: 12
+Used **AVAILABLE_MEM_GB**: 10164 GB
+----------------------------------------------------------------------
+**MAKE_JOBS**: -j8 --load-average=12 
+
+Variables available for override (use 'make VAR_NAME=value'):
+**CPUS** (default: number of processors, e.g., 'make CPUS=4')
+**LOADAVG** (default: 1.5 times CPUS, e.g., 'make LOADAVG=54')
+**AVAILABLE_MEM_GB** (default: memory available on the system in GB, e.g., 'make AVAILABLE_MEM_GB=4')
+**MEM_PER_JOB_GB** (default: 1GB per job, e.g., 'make MEM_PER_JOB_GB=2')
+----------------------------------------------------------------------
+!!!!!! Build starts !!!!!!
+Using /home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-gcc
+Makefile:304: warning: overriding recipe for target 'all'
+Makefile:285: warning: ignoring old recipe for target 'all'
+if [ ! -e "/home/alguien/git/heads/build/x86/coreboot-25.09/.canary" ] && [ ! -d "/home/alguien/git/heads/build/x86/coreboot-25.09" ]; then echo "INFO: .canary file and directory not found. Cloning repository https://github.com/coreboot/coreboot into /home/alguien/git/heads/build/x86/coreboot-25.09" && git clone https://github.com/coreboot/coreboot "/home/alguien/git/heads/build/x86/coreboot-25.09" && echo "INFO: Resetting repository to commit 07df08836eca9dd755cc32b6d78727760d201605" && git -C "/home/alguien/git/heads/build/x86/coreboot-25.09" reset --hard 07df08836eca9dd755cc32b6d78727760d201605 && echo "INFO: Creating .canary file with repo and commit hash" && echo -n 'https://github.com/coreboot/coreboot|07df08836eca9dd755cc32b6d78727760d201605' > "/home/alguien/git/heads/build/x86/coreboot-25.09/.canary" ; elif [ ! -e "/home/alguien/git/heads/build/x86/coreboot-25.09/.canary" ] || [ "$(cat "/home/alguien/git/heads/build/x86/coreboot-25.09/.canary")" != 'https://github.com/coreboot/coreboot|07df08836eca9dd755cc32b6d78727760d201605' ]; then echo "INFO: .canary file missing or differs. Resetting coreboot-25.09 to https://github.com/coreboot/coreboot at 07df08836eca9dd755cc32b6d78727760d201605" && git -C "/home/alguien/git/heads/build/x86/coreboot-25.09" reset --hard HEAD^ && echo "INFO: Fetching commit 07df08836eca9dd755cc32b6d78727760d201605 from https://github.com/coreboot/coreboot (without recursing submodules)" && git -C "/home/alguien/git/heads/build/x86/coreboot-25.09" fetch https://github.com/coreboot/coreboot 07df08836eca9dd755cc32b6d78727760d201605 --recurse-submodules=no && echo "INFO: Resetting repository to commit 07df08836eca9dd755cc32b6d78727760d201605" && git -C "/home/alguien/git/heads/build/x86/coreboot-25.09" reset --hard 07df08836eca9dd755cc32b6d78727760d201605 && echo "INFO: Cleaning repository directory (including payloads and util/cbmem)" && git -C "/home/alguien/git/heads/build/x86/coreboot-25.09" clean -df && git -C "/home/alguien/git/heads/build/x86/coreboot-25.09" clean -dffx payloads util/cbmem && echo "INFO: Synchronizing submodules" && git -C "/home/alguien/git/heads/build/x86/coreboot-25.09" submodule sync && echo "INFO: Updating submodules (init and checkout)" && git -C "/home/alguien/git/heads/build/x86/coreboot-25.09" submodule update --init --checkout && echo "INFO: Cleaning board-specific build directories to prevent stale artifacts" && rm -rf "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized" "/home/alguien/git/heads/build/x86/coreboot-25.09/EOL_x280-hotp-maximized" && echo "INFO: Recreating board directories" && mkdir -p "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized" "/home/alguien/git/heads/build/x86/coreboot-25.09/EOL_x280-hotp-maximized" && echo "INFO: Updating .canary file with new repo info" && echo -n 'https://github.com/coreboot/coreboot|07df08836eca9dd755cc32b6d78727760d201605' > "/home/alguien/git/heads/build/x86/coreboot-25.09/.canary" ; fi
+if [ ! -e "/home/alguien/git/heads/build/x86/coreboot-25.09/.patched" ]; then echo "INFO: .patched file not found. Beginning patch application for coreboot-25.09" && if [ -r patches/coreboot-25.09.patch ]; then echo "INFO: Applying single patch file: patches/coreboot-25.09.patch" && if ! git apply --verbose --reject --binary --directory build/x86/coreboot-25.09 < patches/coreboot-25.09.patch; then echo "ERROR: Failed to apply patch: patches/coreboot-25.09.patch. Reversing and reapplying." && git apply --reverse --verbose --reject --binary --directory build/x86/coreboot-25.09 < patches/coreboot-25.09.patch || true && git apply --verbose --reject --binary --directory build/x86/coreboot-25.09 < patches/coreboot-25.09.patch || exit 1; fi; fi; if [ -d patches/coreboot-25.09 ]; then echo "INFO: Applying multiple patch files from directory: patches/coreboot-25.09" && for patch in patches/coreboot-25.09/*.patch; do echo "INFO: Applying patch file: $patch" && if ! git apply --verbose --reject --binary --directory build/x86/coreboot-25.09 < "$patch"; then echo "ERROR: Failed to apply patch: $patch. Reversing and reapplying." && git apply --reverse --verbose --reject --binary --directory build/x86/coreboot-25.09 < "$patch" || true && git apply --verbose --reject --binary --directory build/x86/coreboot-25.09 < "$patch" || exit 1; fi; done; fi; echo "INFO: Patches applied successfully. Creating .patched file." && touch "/home/alguien/git/heads/build/x86/coreboot-25.09/.patched"; fi
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/hid/usbhid/usbhid.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/usbhid.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/hid/usbhid/usbhid.ko" 
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/net/ethernet/intel/e1000e/e1000e.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/e1000e.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/net/ethernet/intel/e1000e/e1000e.ko" 
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/usb/host/ehci-hcd.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/ehci-hcd.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/usb/host/ehci-hcd.ko" 
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/usb/host/ehci-pci.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/ehci-pci.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/usb/host/ehci-pci.ko" 
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/usb/host/xhci-hcd.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/xhci-hcd.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/usb/host/xhci-hcd.ko" 
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/usb/host/xhci-pci.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/xhci-pci.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/usb/host/xhci-pci.ko" 
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/usb/storage/usb-storage.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/usb-storage.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/usb/storage/usb-storage.ko" 
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/net/mii.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/mii.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/net/mii.ko" 
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/net/usb/usbnet.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/usbnet.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/net/usb/usbnet.ko" 
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/net/usb/cdc_ether.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/cdc_ether.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/net/usb/cdc_ether.ko" 
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/net/usb/cdc_ncm.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/cdc_ncm.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/net/usb/cdc_ncm.ko" 
+2026-05-11 04:41:30+00:00 INSTALL-MODULE drivers/net/usb/cdc_eem.ko
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates --strip-debug -o "/tmp/tmp.wLQUdJMBhW/lib/modules/cdc_eem.ko" "/home/alguien/git/heads/build/x86/linux-6.1.8/linux-t480/drivers/net/usb/cdc_eem.ko" 
+2026-05-11 04:41:30+00:00 SYMLINK bin/busybox
+make -C /home/alguien/git/heads/build/x86/busybox-1.36.1 CC="/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-gcc -fdebug-prefix-map=/home/alguien/git/heads=heads -gno-record-gcc-switches -D__MUSL__ --sysroot  /home/alguien/git/heads/install/x86 -isystem /home/alguien/git/heads/install/x86/include -L/home/alguien/git/heads/install/x86/lib " CROSS_COMPILE="/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-" CONFIG_PREFIX="/tmp/tmp.i741dWdjJ9/tools/bin/.." install | tee -a /home/alguien/git/heads/build/x86/log/busybox.log  
+rm -f .kernelrelease
+echo 1.36.1 > .kernelrelease
+/home/alguien/git/heads/build/x86/busybox-1.36.1/scripts/gen_build_files.sh /home/alguien/git/heads/build/x86/busybox-1.36.1 /home/alguien/git/heads/build/x86/busybox-1.36.1
+make -f scripts/Makefile.build obj=scripts/basic
+make -f scripts/Makefile.build obj=applets
+make -f scripts/Makefile.build obj=.
+make -f scripts/Makefile.build obj=scripts
+make -f scripts/Makefile.build obj=applets
+make -f scripts/Makefile.build obj=archival
+make -f scripts/Makefile.build obj=archival/libarchive
+make -f scripts/Makefile.build obj=console-tools
+make -f scripts/Makefile.build obj=coreutils
+make -f scripts/Makefile.build obj=coreutils/libcoreutils
+make -f scripts/Makefile.build obj=debianutils
+make -f scripts/Makefile.build obj=klibc-utils
+make -f scripts/Makefile.build obj=e2fsprogs
+make -f scripts/Makefile.build obj=editors
+make -f scripts/Makefile.build obj=findutils
+make -f scripts/Makefile.build obj=init
+make -f scripts/Makefile.build obj=libbb
+make -f scripts/Makefile.build obj=libpwdgrp
+make -f scripts/Makefile.build obj=loginutils
+make -f scripts/Makefile.build obj=mailutils
+make -f scripts/Makefile.build obj=miscutils
+make -f scripts/Makefile.build obj=modutils
+make -f scripts/Makefile.build obj=networking
+make -f scripts/Makefile.build obj=networking/libiproute
+make -f scripts/Makefile.build obj=networking/udhcp
+make -f scripts/Makefile.build obj=printutils
+make -f scripts/Makefile.build obj=procps
+make -f scripts/Makefile.build obj=runit
+make -f scripts/Makefile.build obj=selinux
+make -f scripts/Makefile.build obj=shell
+make -f scripts/Makefile.build obj=sysklogd
+make -f scripts/Makefile.build obj=util-linux
+make -f scripts/Makefile.build obj=util-linux/volume_id
+rm -f .old_version
+DO_INSTALL_LIBS="" \
+	sh /home/alguien/git/heads/build/x86/busybox-1.36.1/applets/install.sh /tmp/tmp.i741dWdjJ9/tools/bin/.. --symlinks
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/[ -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/[[ -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/arch -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/ascii -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/ash -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/awk -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/base32 -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/basename -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/bunzip2 -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/bzcat -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/bzip2 -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/cat -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/chattr -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/chmod -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/clear -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/cmp -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/cp -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/cpio -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/crc32 -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/cttyhack -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/cut -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/date -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/dc -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/dd -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/df -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/diff -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/dirname -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/dmesg -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/du -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/echo -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/env -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/expr -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/factor -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/fallocate -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/false -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/find -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/fold -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/getopt -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/grep -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/groups -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/gunzip -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/gzip -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/hd -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/head -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/hexdump -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/hexedit -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/hostid -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/id -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/install -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/kill -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/killall -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/less -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/link -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/ln -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/ls -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/lsattr -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/lsof -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/lsscsi -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/lsusb -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/lzcat -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/lzma -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/md5sum -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/mkdir -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/mkfifo -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/mknod -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/mktemp -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/more -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/mount -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/mv -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/nc -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/nl -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/nproc -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/nslookup -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/paste -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/patch -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/pgrep -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/pidof -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/ping -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/pkill -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/printf -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/ps -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/pwd -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/readlink -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/realpath -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/reset -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/resume -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/rm -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/rmdir -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/sed -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/seq -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/setfattr -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/setpriv -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/setserial -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/setsid -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/sh -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/sha1sum -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/sha256sum -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/sha3sum -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/sha512sum -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/shred -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/sleep -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/sort -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/ssl_client -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/stat -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/strings -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/stty -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/sync -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/tail -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/tar -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/tee -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/test -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/tftp -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/time -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/top -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/touch -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/tr -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/tree -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/true -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/truncate -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/tsort -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/tty -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/umount -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/uname -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/uniq -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/unlzma -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/unxz -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/unzip -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/usleep -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/vi -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/wc -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/wget -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/which -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/xargs -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/xxd -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/xz -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/xzcat -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//bin/zcat -> busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/arp -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/blkid -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/blockdev -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/chroot -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/devmem -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/fdisk -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/fsck -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/fsfreeze -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/hwclock -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/i2cdetect -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/i2cdump -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/i2cget -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/i2cset -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/ifconfig -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/insmod -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/ip -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/killall5 -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/loadkmap -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/losetup -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/lsmod -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/mkdosfs -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/mkfs.vfat -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/modinfo -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/ntpd -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/partprobe -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/reboot -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/route -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/seedrng -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/sysctl -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/udhcpc -> ../bin/busybox
+  /tmp/tmp.i741dWdjJ9/tools/bin/..//sbin/vconfig -> ../bin/busybox
+
+
+--------------------------------------------------
+You will probably need to make your busybox binary
+setuid root to ensure all configured applets will
+work properly.
+--------------------------------------------------
+
+# Remove busybox's reboot symlink that conflicts with our custom script
+2026-05-11 04:41:32+00:00 RM-SYMLINKS bin/busybox
+rm -f /tmp/tmp.i741dWdjJ9/tools/bin/../sbin/reboot  
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/kexec-tools-2.0.26/build/sbin/kexec
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/kexec-tools-2.0.26/build/sbin/kexec" "/tmp/tmp.i741dWdjJ9/tools/bin/kexec"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/tpmtotp-4d63d21c8b7db2e92ddb393057f168aead147f47/totp
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/tpmtotp-4d63d21c8b7db2e92ddb393057f168aead147f47/totp" "/tmp/tmp.i741dWdjJ9/tools/bin/totp"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/tpmtotp-4d63d21c8b7db2e92ddb393057f168aead147f47/hotp
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/tpmtotp-4d63d21c8b7db2e92ddb393057f168aead147f47/hotp" "/tmp/tmp.i741dWdjJ9/tools/bin/hotp"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/tpmtotp-4d63d21c8b7db2e92ddb393057f168aead147f47/qrenc
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/tpmtotp-4d63d21c8b7db2e92ddb393057f168aead147f47/qrenc" "/tmp/tmp.i741dWdjJ9/tools/bin/qrenc"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/tpmtotp-4d63d21c8b7db2e92ddb393057f168aead147f47/util/tpm
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/tpmtotp-4d63d21c8b7db2e92ddb393057f168aead147f47/util/tpm" "/tmp/tmp.i741dWdjJ9/tools/bin/tpm"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/pciutils-3.5.4/lspci
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/pciutils-3.5.4/lspci" "/tmp/tmp.i741dWdjJ9/tools/bin/lspci"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/flashprog-eb2c04185f8f471c768b742d66e4c552effdd9cb/flashprog
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/flashprog-eb2c04185f8f471c768b742d66e4c552effdd9cb/flashprog" "/tmp/tmp.i741dWdjJ9/tools/bin/flashprog"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/cryptsetup-2.6.1/.libs/cryptsetup
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/cryptsetup-2.6.1/.libs/cryptsetup" "/tmp/tmp.i741dWdjJ9/tools/bin/cryptsetup"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/cryptsetup-2.6.1/.libs/veritysetup
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/cryptsetup-2.6.1/.libs/veritysetup" "/tmp/tmp.i741dWdjJ9/tools/bin/veritysetup"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/gnupg-2.4.0/g10/gpg
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/gnupg-2.4.0/g10/gpg" "/tmp/tmp.i741dWdjJ9/tools/bin/gpg"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/gnupg-2.4.0/agent/gpg-agent
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/gnupg-2.4.0/agent/gpg-agent" "/tmp/tmp.i741dWdjJ9/tools/bin/gpg-agent"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/gnupg-2.4.0/scd/scdaemon
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/gnupg-2.4.0/scd/scdaemon" "/tmp/tmp.i741dWdjJ9/tools/bin/scdaemon"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/pinentry-1.1.0/tty/pinentry-tty
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/pinentry-1.1.0/tty/pinentry-tty" "/tmp/tmp.i741dWdjJ9/tools/bin/pinentry-tty"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/lvm2.2.03.23/./libdm/dm-tools/dmsetup
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/lvm2.2.03.23/./libdm/dm-tools/dmsetup" "/tmp/tmp.i741dWdjJ9/tools/bin/dmsetup"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/lvm2.2.03.23/tools/lvm
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/lvm2.2.03.23/tools/lvm" "/tmp/tmp.i741dWdjJ9/tools/bin/lvm"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/dropbear-2016.74/ssh
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/dropbear-2016.74/ssh" "/tmp/tmp.i741dWdjJ9/tools/bin/ssh"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/dropbear-2016.74/scp
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/dropbear-2016.74/scp" "/tmp/tmp.i741dWdjJ9/tools/bin/scp"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/dropbear-2016.74/dropbear
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/dropbear-2016.74/dropbear" "/tmp/tmp.i741dWdjJ9/tools/bin/dropbear"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/flashtools-d1e6f12568cb23387144a4b7a6535fe1bc1e79b1/flashtool
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/flashtools-d1e6f12568cb23387144a4b7a6535fe1bc1e79b1/flashtool" "/tmp/tmp.i741dWdjJ9/tools/bin/flashtool"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/flashtools-d1e6f12568cb23387144a4b7a6535fe1bc1e79b1/peek
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/flashtools-d1e6f12568cb23387144a4b7a6535fe1bc1e79b1/peek" "/tmp/tmp.i741dWdjJ9/tools/bin/peek"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/flashtools-d1e6f12568cb23387144a4b7a6535fe1bc1e79b1/poke
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/flashtools-d1e6f12568cb23387144a4b7a6535fe1bc1e79b1/poke" "/tmp/tmp.i741dWdjJ9/tools/bin/poke"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/flashtools-d1e6f12568cb23387144a4b7a6535fe1bc1e79b1/cbfs
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/flashtools-d1e6f12568cb23387144a4b7a6535fe1bc1e79b1/cbfs" "/tmp/tmp.i741dWdjJ9/tools/bin/cbfs"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/flashtools-d1e6f12568cb23387144a4b7a6535fe1bc1e79b1/uefi
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/flashtools-d1e6f12568cb23387144a4b7a6535fe1bc1e79b1/uefi" "/tmp/tmp.i741dWdjJ9/tools/bin/uefi"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/fbwhiptail-1.3/fbwhiptail
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/fbwhiptail-1.3/fbwhiptail" "/tmp/tmp.i741dWdjJ9/tools/bin/fbwhiptail"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/fbwhiptail-1.3/whiptail
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/fbwhiptail-1.3/whiptail" "/tmp/tmp.i741dWdjJ9/tools/bin/whiptail"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/hotp-verification-f4583b701a354dfa50c690075a568bc5cdf160e1/hotp_verification
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/hotp-verification-f4583b701a354dfa50c690075a568bc5cdf160e1/hotp_verification" "/tmp/tmp.i741dWdjJ9/tools/bin/hotp_verification"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/hotp-verification-f4583b701a354dfa50c690075a568bc5cdf160e1/hotp_initialize
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/hotp-verification-f4583b701a354dfa50c690075a568bc5cdf160e1/hotp_initialize" "/tmp/tmp.i741dWdjJ9/tools/bin/hotp_initialize"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/tpm2-tools-5.6/tools/tpm2
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/tpm2-tools-5.6/tools/tpm2" "/tmp/tmp.i741dWdjJ9/tools/bin/tpm2"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/bash-5.1.16/bash
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/bash-5.1.16/bash" "/tmp/tmp.i741dWdjJ9/tools/bin/bash"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/io386-fc73fcf8e51a70638679c3e9b0ada10527f8a7c1/io386
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/io386-fc73fcf8e51a70638679c3e9b0ada10527f8a7c1/io386" "/tmp/tmp.i741dWdjJ9/tools/bin/io386"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/kbd-2.6.1/src/setfont
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/kbd-2.6.1/src/setfont" "/tmp/tmp.i741dWdjJ9/tools/bin/setfont"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/kbd-2.6.1/src/loadkeys
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/kbd-2.6.1/src/loadkeys" "/tmp/tmp.i741dWdjJ9/tools/bin/loadkeys"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/zstd-1.5.5/programs/zstd-decompress
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/zstd-1.5.5/programs/zstd-decompress" "/tmp/tmp.i741dWdjJ9/tools/bin/zstd-decompress"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/e2fsprogs-1.47.0/misc/mke2fs
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/e2fsprogs-1.47.0/misc/mke2fs" "/tmp/tmp.i741dWdjJ9/tools/bin/mke2fs"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/exfatprogs-1.2.1/fsck/fsck.exfat
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/exfatprogs-1.2.1/fsck/fsck.exfat" "/tmp/tmp.i741dWdjJ9/tools/bin/fsck.exfat"
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/exfatprogs-1.2.1/mkfs/mkfs.exfat
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/exfatprogs-1.2.1/mkfs/mkfs.exfat" "/tmp/tmp.i741dWdjJ9/tools/bin/mkfs.exfat"
+2026-05-11 04:41:32+00:00 MAKE cbmem
+make -C "/home/alguien/git/heads/build/x86/coreboot-25.09/util/cbmem/" CC="/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-gcc -fdebug-prefix-map=/home/alguien/git/heads=heads -gno-record-gcc-switches -D__MUSL__ --sysroot  /home/alguien/git/heads/install/x86 -isystem /home/alguien/git/heads/install/x86/include -L/home/alguien/git/heads/install/x86/lib " AR="/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-ar" LD="/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-ld" STRIP="/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip" NM="/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-nm" OBJCOPY="/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-objcopy" OBJDUMP="/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-objdump" PKG_CONFIG_PATH= PKG_CONFIG_LIBDIR="/home/alguien/git/heads/install/x86/lib/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/home/alguien/git/heads/install/x86"   
+make[1]: Entering directory '/home/alguien/git/heads/build/x86/coreboot-25.09/util/cbmem'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/home/alguien/git/heads/build/x86/coreboot-25.09/util/cbmem'
+2026-05-11 04:41:32+00:00 INSTALL-BIN build/x86/coreboot-25.09/util/cbmem/cbmem
+cp -a --remove-destination "/home/alguien/git/heads/build/x86/coreboot-25.09/util/cbmem/cbmem" "/tmp/tmp.i741dWdjJ9/tools/bin/cbmem"
+2026-05-11 04:41:32+00:00 INSTALL-LIB crossgcc/x86/bin/../lib/gcc/x86_64-linux-musl/9.4.0/../../../../x86_64-linux-musl/lib/libc.so
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libc.so" "/home/alguien/git/heads/crossgcc/x86/bin/../lib/gcc/x86_64-linux-musl/9.4.0/../../../../x86_64-linux-musl/lib/libc.so"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/cairo-1.14.12/src/.libs/libcairo.so.2
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libcairo.so.2" "/home/alguien/git/heads/build/x86/cairo-1.14.12/src/.libs/libcairo.so.2"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/cryptsetup-2.6.1/.libs/libcryptsetup.so.12
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libcryptsetup.so.12" "/home/alguien/git/heads/build/x86/cryptsetup-2.6.1/.libs/libcryptsetup.so.12"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/json-c-0.14/build/libjson-c.so.5
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libjson-c.so.5" "/home/alguien/git/heads/build/x86/json-c-0.14/build/libjson-c.so.5"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/libaio-0.3.113/src/libaio.so.1
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libaio.so.1" "/home/alguien/git/heads/build/x86/libaio-0.3.113/src/libaio.so.1"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/libassuan-2.5.5/src/.libs/libassuan.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libassuan.so.0" "/home/alguien/git/heads/build/x86/libassuan-2.5.5/src/.libs/libassuan.so.0"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/libgcrypt-1.10.1/src/.libs/libgcrypt.so.20
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libgcrypt.so.20" "/home/alguien/git/heads/build/x86/libgcrypt-1.10.1/src/.libs/libgcrypt.so.20"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/libgpg-error-1.46/src/.libs/libgpg-error.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libgpg-error.so.0" "/home/alguien/git/heads/build/x86/libgpg-error-1.46/src/.libs/libgpg-error.so.0"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/libksba-1.6.3/src/.libs/libksba.so.8
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libksba.so.8" "/home/alguien/git/heads/build/x86/libksba-1.6.3/src/.libs/libksba.so.8"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/libpng-1.6.34/.libs/libpng16.so.16
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libpng16.so.16" "/home/alguien/git/heads/build/x86/libpng-1.6.34/.libs/libpng16.so.16"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/libusb-1.0.21/libusb/.libs/libusb-1.0.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libusb-1.0.so.0" "/home/alguien/git/heads/build/x86/libusb-1.0.21/libusb/.libs/libusb-1.0.so.0"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/lvm2.2.03.23/libdm/ioctl/libdevmapper.so.1.02
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libdevmapper.so.1.02" "/home/alguien/git/heads/build/x86/lvm2.2.03.23/libdm/ioctl/libdevmapper.so.1.02"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/mbedtls-2.4.2/library/libmbedcrypto.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libmbedcrypto.so.0" "/home/alguien/git/heads/build/x86/mbedtls-2.4.2/library/libmbedcrypto.so.0"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/npth-1.6/src/.libs/libnpth.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libnpth.so.0" "/home/alguien/git/heads/build/x86/npth-1.6/src/.libs/libnpth.so.0"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/openssl-3.0.8/libcrypto.so.3
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libcrypto.so.3" "/home/alguien/git/heads/build/x86/openssl-3.0.8/libcrypto.so.3"
+2026-05-11 04:41:32+00:00 INSTALL-LIB build/x86/pciutils-3.5.4/lib/libpci.so.3.5.4
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libpci.so.3.5.4" "/home/alguien/git/heads/build/x86/pciutils-3.5.4/lib/libpci.so.3.5.4"
+2026-05-11 04:41:33+00:00 INSTALL-LIB install/x86/lib/libpci.so.3
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libpci.so.3" "/home/alguien/git/heads/install/x86/lib/libpci.so.3"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/pixman-0.34.0/pixman/.libs/libpixman-1.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libpixman-1.so.0" "/home/alguien/git/heads/build/x86/pixman-0.34.0/pixman/.libs/libpixman-1.so.0"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/popt-1.19/src/.libs/libpopt.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libpopt.so.0" "/home/alguien/git/heads/build/x86/popt-1.19/src/.libs/libpopt.so.0"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/qrencode-3.4.4/.libs/libqrencode.so.3
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libqrencode.so.3" "/home/alguien/git/heads/build/x86/qrencode-3.4.4/.libs/libqrencode.so.3"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/tpm2-tss-3.2.2/src/tss2-rc/.libs/libtss2-rc.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libtss2-rc.so.0" "/home/alguien/git/heads/build/x86/tpm2-tss-3.2.2/src/tss2-rc/.libs/libtss2-rc.so.0"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/tpm2-tss-3.2.2/src/tss2-mu/.libs/libtss2-mu.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libtss2-mu.so.0" "/home/alguien/git/heads/build/x86/tpm2-tss-3.2.2/src/tss2-mu/.libs/libtss2-mu.so.0"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/tpm2-tss-3.2.2/src/tss2-sys/.libs/libtss2-sys.so.1
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libtss2-sys.so.1" "/home/alguien/git/heads/build/x86/tpm2-tss-3.2.2/src/tss2-sys/.libs/libtss2-sys.so.1"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/tpm2-tss-3.2.2/src/tss2-esys/.libs/libtss2-esys.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libtss2-esys.so.0" "/home/alguien/git/heads/build/x86/tpm2-tss-3.2.2/src/tss2-esys/.libs/libtss2-esys.so.0"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/tpm2-tss-3.2.2/src/tss2-tcti/.libs/libtss2-tctildr.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libtss2-tctildr.so.0" "/home/alguien/git/heads/build/x86/tpm2-tss-3.2.2/src/tss2-tcti/.libs/libtss2-tctildr.so.0"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/tpm2-tss-3.2.2/src/tss2-tcti/.libs/libtss2-tcti-device.so.0
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libtss2-tcti-device.so.0" "/home/alguien/git/heads/build/x86/tpm2-tss-3.2.2/src/tss2-tcti/.libs/libtss2-tcti-device.so.0"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/tpmtotp-4d63d21c8b7db2e92ddb393057f168aead147f47/libtpm/libtpm.so
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libtpm.so" "/home/alguien/git/heads/build/x86/tpmtotp-4d63d21c8b7db2e92ddb393057f168aead147f47/libtpm/libtpm.so"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/util-linux-2.39/.libs/libuuid.so.1
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libuuid.so.1" "/home/alguien/git/heads/build/x86/util-linux-2.39/.libs/libuuid.so.1"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/util-linux-2.39/.libs/libblkid.so.1
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libblkid.so.1" "/home/alguien/git/heads/build/x86/util-linux-2.39/.libs/libblkid.so.1"
+2026-05-11 04:41:33+00:00 INSTALL-LIB build/x86/zlib-1.2.11/libz.so.1
+/home/alguien/git/heads/crossgcc/x86/bin/x86_64-linux-musl-strip --preserve-dates -o "/tmp/tmp.i741dWdjJ9/tools/lib/libz.so.1" "/home/alguien/git/heads/build/x86/zlib-1.2.11/libz.so.1"
+2026-05-11 04:41:33+00:00 INSTALL boards/EOL_x280-hotp-maximized/EOL_x280-hotp-maximized.config
+export | grep ' CONFIG_' | sed -e 's/^declare -x /export /' -e 's/\\\"//g' > /tmp/tmp.i741dWdjJ9/tools/etc/config 
+2026-05-11 04:41:33+00:00 HASH dc0cd70cd46e5b4c33e4f115e7942cceb69464c7 dirty EOL_x280-hotp-maximized
+echo export GIT_HASH=\'dc0cd70cd46e5b4c33e4f115e7942cceb69464c7\' >> /tmp/tmp.i741dWdjJ9/tools/etc/config ; echo export GIT_STATUS=dirty >> /tmp/tmp.i741dWdjJ9/tools/etc/config ; echo export CONFIG_BOARD=EOL_x280-hotp-maximized >> /tmp/tmp.i741dWdjJ9/tools/etc/config ; echo export CONFIG_BRAND_NAME=Heads >> /tmp/tmp.i741dWdjJ9/tools/etc/config ; 
+2026-05-11 04:41:33+00:00 CPIO      build/x86/EOL_x280-hotp-maximized/tools.cpio
+( cd "/tmp/tmp.i741dWdjJ9/tools"; find . | cpio --quiet -H newc -o ) | ./bin/cpio-clean.pl > "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/tools.cpio.tmp" 
+2026-05-11 04:41:33+00:00 UNCHANGED build/x86/EOL_x280-hotp-maximized/tools.cpio
+476392bb400e9a0f04e73b83be51b95d7e7be2d85995633fcf1bb6aae740f40b  /home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/tools.cpio
+19125760:/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/tools.cpio
+2026-05-11 04:41:33+00:00 HASHES    build/x86/EOL_x280-hotp-maximized/tools.cpio
+( cd "/tmp/tmp.i741dWdjJ9/tools"; echo "-----" ; find . -type f -print0 | xargs -0 sha256sum ; echo "-----" ; ) >> "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/hashes.txt" 
+2026-05-11 04:41:33+00:00 SIZES     build/x86/EOL_x280-hotp-maximized/tools.cpio
+( cd "/tmp/tmp.i741dWdjJ9/tools"; echo "-----" ; find . -type f -print0 | xargs -0 stat -c "%8s:%n" ; echo "-----" ; ) >> "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/sizes.txt" 
+2026-05-11 04:41:33+00:00 CPIO      build/x86/EOL_x280-hotp-maximized/heads.cpio
+( cd "/home/alguien/git/heads/initrd"; find . | cpio --quiet -H newc -o ) | ./bin/cpio-clean.pl > "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/heads.cpio.tmp" 
+2026-05-11 04:41:33+00:00 UNCHANGED build/x86/EOL_x280-hotp-maximized/heads.cpio
+b4e9aeebd962ef2fb4546d2d5850fb17c3e0dee0a00850742f59eb41f6dff6ec  /home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/heads.cpio
+  588800:/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/heads.cpio
+2026-05-11 04:41:33+00:00 HASHES    build/x86/EOL_x280-hotp-maximized/heads.cpio
+( cd "/home/alguien/git/heads/initrd"; echo "-----" ; find . -type f -print0 | xargs -0 sha256sum ; echo "-----" ; ) >> "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/hashes.txt" 
+2026-05-11 04:41:33+00:00 SIZES     build/x86/EOL_x280-hotp-maximized/heads.cpio
+( cd "/home/alguien/git/heads/initrd"; echo "-----" ; find . -type f -print0 | xargs -0 stat -c "%8s:%n" ; echo "-----" ; ) >> "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/sizes.txt" 
+2026-05-11 04:41:33+00:00 INSTALL-DATA build/x86/kbd-2.6.1/data/keymaps => usr/lib/kbd/keymaps
+mkdir -p "/tmp/tmp.i741dWdjJ9/data/usr/lib/kbd/"; cp -R "/home/alguien/git/heads/build/x86/kbd-2.6.1/data/keymaps" "/tmp/tmp.i741dWdjJ9/data/usr/lib/kbd/keymaps"; 
+2026-05-11 04:41:33+00:00 INSTALL-DATA build/x86/linux-6.1.8/drivers/tty/vt/defkeymap.map => share/keymaps/defkeymap.map
+mkdir -p "/tmp/tmp.i741dWdjJ9/data/share/keymaps/"; cp -R "/home/alguien/git/heads/build/x86/linux-6.1.8/drivers/tty/vt/defkeymap.map" "/tmp/tmp.i741dWdjJ9/data/share/keymaps/defkeymap.map"; 
+2026-05-11 04:41:33+00:00 CPIO      build/x86/EOL_x280-hotp-maximized/data.cpio
+( cd "/tmp/tmp.i741dWdjJ9/data"; find . | cpio --quiet -H newc -o ) | ./bin/cpio-clean.pl > "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/data.cpio.tmp" 
+2026-05-11 04:41:33+00:00 UNCHANGED build/x86/EOL_x280-hotp-maximized/data.cpio
+879be3583e8a7ad429e969cba378d000f36cfd7d11acbebda78c0f0bb94eab1f  /home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/data.cpio
+ 2508800:/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/data.cpio
+2026-05-11 04:41:33+00:00 HASHES    build/x86/EOL_x280-hotp-maximized/data.cpio
+( cd "/tmp/tmp.i741dWdjJ9/data"; echo "-----" ; find . -type f -print0 | xargs -0 sha256sum ; echo "-----" ; ) >> "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/hashes.txt" 
+2026-05-11 04:41:33+00:00 SIZES     build/x86/EOL_x280-hotp-maximized/data.cpio
+( cd "/tmp/tmp.i741dWdjJ9/data"; echo "-----" ; find . -type f -print0 | xargs -0 stat -c "%8s:%n" ; echo "-----" ; ) >> "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/sizes.txt" 
+# Use coreboot.rom, because custom output files might not be processed by cbfstool
+"/home/alguien/git/heads/build/x86/coreboot-25.09/EOL_x280-hotp-maximized/cbfstool" "/home/alguien/git/heads/build/x86/coreboot-25.09/EOL_x280-hotp-maximized/coreboot.rom" print
+FMAP REGION: COREBOOT
+Name                           Offset     Type           Size   Comp
+cbfs_master_header             0x0        cbfs header        32 none
+cpu_microcode_blob.bin         0x80       microcode       63488 none
+intel_fit                      0xf8c0     intel_fit         112 none
+fallback/romstage              0xf980     stage           56488 none
+fallback/ramstage              0x1d6c0    stage          149486 LZMA (314424 decompressed)
+config                         0x41f40    raw              3547 LZMA (11376 decompressed)
+revision                       0x42d80    raw               772 none
+build_info                     0x430c0    raw                92 none
+bootsplash.jpg                 0x43140    bootsplash      62231 none
+fallback/dsdt.aml              0x52480    raw             14024 none
+vbt.bin                        0x55b80    raw              1410 LZMA (4608 decompressed)
+cmos_layout.bin                0x56140    cmos_layout      1296 none
+fallback/postcar               0x56680    stage           31308 none
+fallback/payload               0x5e140    simple elf    9592080 none
+(empty)                        0x983e80   null          5529380 none
+bootblock                      0xec9dc0   bootblock       24576 none
+
+Validating final CBFS/IFD configuration...
+===================================================================
+IFD vs CBFS Size Validation
+===================================================================
+Using platform-specific parse: sklkbl
+IFD BIOS Region: 0x00700000 - 0x00ffffff
+IFD BIOS Size:   0x900000 (9216 KiB)
+CONFIG_CBFS_SIZE: 0xEEC000 (15280 KiB)
+
+❌ VALIDATION FAILED: CONFIG_CBFS_SIZE exceeds IFD BIOS region by 6064 KiB
+
+Fix: Set CONFIG_CBFS_SIZE=0x900000 in /home/alguien/git/heads/config/coreboot-x280-maximized.config
+Or run: make BOARD=EOL_x280-hotp-maximized fix_cbfs_ifd
+make: *** [modules/coreboot:292: /home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom] Error 1

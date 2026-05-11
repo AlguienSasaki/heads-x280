@@ -1,0 +1,105 @@
+ 2026-05-11 04:59:53+00:00 HASHES build/x86/EOL_x280-hotp-maximized/data.cpio
+
+( cd "/tmp/tmp.MNHRqahxTQ/data"; echo "-----" ; find . -type f -print0 | xargs -0 sha256sum ; echo "-----" ; ) >> "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/hashes.txt"
+
+2026-05-11 04:59:53+00:00 SIZES build/x86/EOL_x280-hotp-maximized/data.cpio
+
+( cd "/tmp/tmp.MNHRqahxTQ/data"; echo "-----" ; find . -type f -print0 | xargs -0 stat -c "%8s:%n" ; echo "-----" ; ) >> "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/sizes.txt"
+
+# Use coreboot.rom, because custom output files might not be processed by cbfstool
+
+"/home/alguien/git/heads/build/x86/coreboot-25.09/EOL_x280-hotp-maximized/cbfstool" "/home/alguien/git/heads/build/x86/coreboot-25.09/EOL_x280-hotp-maximized/coreboot.rom" print
+
+FMAP REGION: COREBOOT
+
+Name Offset Type Size Comp
+
+cbfs_master_header 0x0 cbfs header 32 none
+
+cpu_microcode_blob.bin 0x80 microcode 63488 none
+
+intel_fit 0xf8c0 intel_fit 112 none
+
+fallback/romstage 0xf980 stage 56488 none
+
+fallback/ramstage 0x1d6c0 stage 149486 LZMA (314424 decompressed)
+
+
+config 0x41f40 raw 3547 LZMA (11376 decompressed)
+
+revision 0x42d80 raw 772 none
+
+build_info 0x430c0 raw 92 none
+
+bootsplash.jpg 0x43140 bootsplash 62231 none
+
+fallback/dsdt.aml 0x52480 raw 14024 none
+
+vbt.bin 0x55b80 raw 1410 LZMA (4608 decompressed)
+
+cmos_layout.bin 0x56140 cmos_layout 1296 none
+
+fallback/postcar 0x56680 stage 31308 none
+
+fallback/payload 0x5e140 simple elf 9592080 none
+
+(empty) 0x983e80 null 5529380 none
+
+bootblock 0xec9dc0 bootblock 24576 none
+
+
+Validating final CBFS/IFD configuration...
+
+===================================================================
+
+IFD vs CBFS Size Validation
+
+===================================================================
+
+Using platform-specific parse: sklkbl
+
+IFD BIOS Region: 0x00114000 - 0x00ffffff
+
+IFD BIOS Size: 0xEEC000 (15280 KiB)
+
+CONFIG_CBFS_SIZE: 0xEEC000 (15280 KiB)
+
+
+✓ CONFIG_CBFS_SIZE exactly matches IFD BIOS region
+
+
+CBFS Free Space: 5529380 bytes (5399 KiB)
+
+
+===================================================================
+
+✓ Validation complete
+
+===================================================================
+
+
+2026-05-11 04:59:53+00:00 INSTALL build/x86/coreboot-25.09/EOL_x280-hotp-maximized/coreboot.rom => build/x86/EOL_x280-hotp-maximized/heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom
+
+if cmp --quiet "/home/alguien/git/heads/build/x86/coreboot-25.09/EOL_x280-hotp-maximized/coreboot.rom" "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom" ; then echo "`date --rfc-3339=seconds` UNCHANGED build/x86/coreboot-25.09/EOL_x280-hotp-maximized/coreboot.rom" ; fi ; cp -a --remove-destination "/home/alguien/git/heads/build/x86/coreboot-25.09/EOL_x280-hotp-maximized/coreboot.rom" "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom" ;
+
+9ded205b1acbff2936f3a6f16f37d6664092be004e07791754c65ea427afc3ae build/x86/EOL_x280-hotp-maximized/heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom
+
+16777216:build/x86/EOL_x280-hotp-maximized/heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom
+
+rm -rf "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/update_pkg"
+
+mkdir -p "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/update_pkg"
+
+cp "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom" "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/update_pkg/"
+
+cd "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/update_pkg" && sha256sum "heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom" >sha256sum.txt
+
+cd "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/update_pkg" && zip -9 "/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.zip" "heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom" sha256sum.txt
+
+adding: heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom (deflated 39%)
+
+adding: sha256sum.txt (deflated 15%)
+
+9ded205b1acbff2936f3a6f16f37d6664092be004e07791754c65ea427afc3ae /home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom
+
+16777216:/home/alguien/git/heads/build/x86/EOL_x280-hotp-maximized/heads-EOL_x280-hotp-maximized-20260508-132407-master_-v0.2.1-3018-gdc0cd70-dirty.rom 
