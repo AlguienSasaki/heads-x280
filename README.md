@@ -5,7 +5,7 @@ The final files will be uploaded to [This repo](https://github.com/NobodyNo0ne/h
 
 Initialy I started compiling and testing the final rom in the T480.
 
-## Aca le pones la imagen papeto y note olvides de quitarle la metadata pe.
+![T480 running Heads](mess/t480_heads.jpg)
 
 With the understanding of how the compilation works, 
 I started working in the x280 port, and I used the T480 files as a base 
